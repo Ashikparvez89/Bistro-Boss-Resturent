@@ -1,7 +1,6 @@
 import React from "react";
 
 const Menu = ({ item }) => {
-  console.log(item);
   const { name, recipe, image, price, category } = item || {};
   return (
     <div className="py-5">
