@@ -5,14 +5,14 @@ import MenuCrad from "../../../Components/Shared/MenuCard/MenuCrad";
 const Recomended = () => {
   const [menu, setMenu] = useState([]);
   useEffect(() => {
-    fetch("menu.json")
+    fetch("http://localhost:5000/menu")
       .then((res) => res.json())
       .then((data) => {
         const popularMenu = data.filter((item) => item.category === "popular");
         setMenu(popularMenu);
       });
   }, []);
-  console.log(menu);
+
   return (
     <div className="py-5">
       <SectionTitle

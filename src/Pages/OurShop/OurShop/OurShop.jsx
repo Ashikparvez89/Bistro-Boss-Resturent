@@ -13,8 +13,12 @@ const OurShop = () => {
   const salad = menu?.filter((item) => item?.category === "salad");
   const dessert = menu?.filter((item) => item?.category === "dessert");
   const drinks = menu?.filter((item) => item?.category === "drinks");
-  const [tabIndex, setTabIndex] = useState(0);
   const { category } = useParams();
+  const categories = ['salad', 'soup', 'pizza', 'dessert', 'drinks']
+  const intitalCategory = categories.indexOf(category)
+  const [tabIndex, setTabIndex] = useState(intitalCategory);
+
+  console.log(intitalCategory);
   console.log(category);
   return (
     <div>

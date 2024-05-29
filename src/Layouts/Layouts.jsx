@@ -6,6 +6,7 @@ import Footer from "../Pages/Home/Footer/Footer";
 const Layouts = () => {
   return (
     <div className="container mx-auto">
+      {/* Can use conditional rendering with uselocation for showing header and footer or make another layouts */}
       <Header></Header>
       <Outlet></Outlet>
       <Footer></Footer>

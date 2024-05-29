@@ -5,8 +5,6 @@ import { Link, useParams } from "react-router-dom";
 
 const MenuCategory = ({ items, img, title, caption, btnText }) => {
   const { category } = useParams();
-  console.log(category);
-  console.log(items);
   return (
     <div>
       {title && <Cover img={img} title={title} caption={caption}></Cover>}

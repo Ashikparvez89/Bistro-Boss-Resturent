@@ -8,7 +8,7 @@ import SectionTitle from "../../Components/SectionTitle/SectionTitle";
 
 const Ourmenu = () => {
   const [menu] = useMenu();
-  console.log(menu);
+
   const soup = menu?.filter((item) => item?.category === "soup");
   const dessert = menu?.filter((item) => item?.category === "dessert");
   const pizza = menu?.filter((item) => item?.category === "pizza");

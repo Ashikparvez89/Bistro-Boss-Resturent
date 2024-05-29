@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 import Menu from "../../../Components/Shared/Menu/Menu";
 import useMenu from "../../../Hooks/useMenu";
+import { Link } from "react-router-dom";
+import { GrLinkTop } from "react-icons/gr";
 
 const PopularMenu = () => {
   const [menu] = useMenu();
   const popularItems = menu?.filter((item) => item?.category === "dessert");
-  console.log(popularItems);
   return (
     <div className="pt-10 ">
       <section>
@@ -20,9 +21,12 @@ const PopularMenu = () => {
           ))}
         </div>
         <div className="text-center my-20">
-          <button className="btn text-lg font-semibold btn-outline border-0 border-b-4">
+          <Link
+            to={"/shop/salad"}
+            className="btn text-lg font-semibold btn-outline border-0 border-b-4"
+          >
             View Full Menu
-          </button>
+          </Link>
         </div>
       </section>
     </div>
