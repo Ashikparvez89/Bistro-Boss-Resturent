@@ -14,6 +14,7 @@ import Review from "../Pages/Dashboard/Review/Review";
 import PaymentHistory from "../Pages/Dashboard/Payment/PaymentHistory";
 import MyBooking from "../Pages/Dashboard/Mybooking/MyBooking";
 import Private from "../Provider/Private/Private";
+import Alluser from "../Pages/Dashboard/MangaeUser/AllUser/Alluser";
 
 export const Router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ export const Router = createBrowserRouter([
       {
         path: "/dashboard/booking",
         element: <MyBooking></MyBooking>,
+      },
+      {
+        path: "/dashboard/allusers",
+        element: <Alluser></Alluser>,
       },
     ],
   },

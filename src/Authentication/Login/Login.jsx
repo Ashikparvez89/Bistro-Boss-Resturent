@@ -24,7 +24,7 @@ const Login = () => {
   } = useForm();
   const onSubmit = (data) => {
     const { email, password } = data;
-    console.log(email, password);
+  
     logInuser(email, password)
       .then((result) => {
         Swal.fire({
@@ -38,7 +38,7 @@ const Login = () => {
       .catch((error) => {
         Swal.fire({
           icon: "error",
-          title: "Great",
+          title: "Opps!!!",
           text: error.message,
           footer: '<a href="#">Why do I have this issue?</a>',
         });

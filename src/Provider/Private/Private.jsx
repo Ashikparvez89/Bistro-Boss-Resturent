@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { Authcontext } from "../AuthProvider/AuthProvider";
 import { Navigate, useLocation } from "react-router-dom";
-import { MdChildCare } from "react-icons/md";
 
 const Private = ({ children }) => {
   const { user, loading } = useContext(Authcontext);
+  console.log(user, loading);
   const location = useLocation();
   if (loading) {
     return (

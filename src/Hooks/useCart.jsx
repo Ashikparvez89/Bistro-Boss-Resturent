@@ -7,8 +7,6 @@ import useUser from "./useUser";
 
 const useCart = () => {
   const { user } = useUser();
-  console.log(user);
-  console.log(user?.email);
   const { refetch, data: cart = [] } = useQuery({
     queryKey: ["cart", user?.email],
     queryFn: async () => {

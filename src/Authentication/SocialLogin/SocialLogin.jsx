@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { axiosPublic } from "../../Hooks/useAxiosPublic";
 
 const SocialLogin = () => {
   const { googleLogin, createuser, githublogin } = useContext(Authcontext);
@@ -13,6 +14,11 @@ const SocialLogin = () => {
   const handleGithub = () => {
     githublogin()
       .then((res) => {
+        const userInfo = {
+          name: res.user?.displayName,
+          photoURL: res.user?.photoURL,
+          email: res.user?.email,
+        };
         Swal.fire({
           icon: "success",
           title: "Great",
@@ -33,22 +39,34 @@ const SocialLogin = () => {
   const handleGoogle = () => {
     googleLogin()
       .then((res) => {
-        Swal.fire({
-          icon: "success",
-          title: "Great",
-          text: "Loged In Successfully",
-          footer: '<a href="#">Why do I have this issue?</a>',
-        });
-        navigate(location?.state ? navigate.state : "/");
+        const userInfo = {
+          name: res.user?.displayName,
+          photoURL: res.user?.photoURL,
+          email: res.user?.email,
+        };
+        axiosPublic
+          .post("/users", userInfo)
+          .then((res) => {
+            console.log(res.data);
+            Swal.fire({
+              icon: "success",
+              title: "Great",
+              text: "Loged In Successfully",
+              footer: '<a href="#">Why do I have this issue?</a>',
+            });
+            navigate(location?.state ? navigate.state : "/");
+          })
+          .catch((error) => {
+            console.log(error.message);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: error.message,
+              footer: '<a href="#">Why do I have this issue?</a>',
+            });
+          });
       })
-      .catch((error) => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: error.message,
-          footer: '<a href="#">Why do I have this issue?</a>',
-        });
-      });
+      .catch((error) => {});
   };
 
   return (

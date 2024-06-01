@@ -6,9 +6,10 @@ import { Authcontext } from "../../Provider/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import { axiosPublic } from "../../Hooks/useAxiosPublic";
 
 const Register = () => {
-  const { createuser, logOut } = useContext(Authcontext);
+  const { createuser, logOut, updateUserProfile } = useContext(Authcontext);
   const navigate = useNavigate();
   const location = useLocation();
   const [show, setShow] = useState(false);
@@ -25,26 +26,42 @@ const Register = () => {
     backgroundAttachment: "fixed",
   };
   const onSubmit = (data) => {
-    const { name, email, password } = data;
-    console.log(name, email, password);
+    const { name, email, password, photoUrl } = data;
+    const userInfo = { name, email, password, photoUrl };
+
     createuser(email, password)
       .then((result) => {
-        Swal.fire({
-          icon: "success",
-          title: "Great",
-          text: "Register Successfully",
-          footer: '<a href="#">Why do I have this issue?</a>',
-        });
-        logOut();
-        navigate(location?.state ? navigate.state : "/login");
+        updateUserProfile(name, photoUrl)
+          .then((result) => {
+            navigate("/login");
+            logOut();
+            axiosPublic
+              .post("/users", userInfo)
+              .then((res) => {
+                if (res.data.insertedId) {
+                  Swal.fire({
+                    icon: "success",
+                    title: "Great",
+                    text: "Register Successfully",
+                    footer: '<a href="#">Why do I have this issue?</a>',
+                  });
+                }
+              })
+              .catch((error) => {
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: error.message,
+                  footer: '<a href="#">Why do I have this issue?</a>',
+                });
+              });
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
       })
       .catch((error) => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: error.message,
-          footer: '<a href="#">Why do I have this issue?</a>',
-        });
+        console.log(error.message);
       });
   };
 
@@ -72,6 +89,13 @@ const Register = () => {
                 name="name"
                 placeholder="Name"
                 {...register("name", { required: true })}
+              />
+              <input
+                className="p-3  rounded-xl border"
+                type="text"
+                name="photoUrl"
+                placeholder="photo Url"
+                {...register("photoUrl", { required: true })}
               />
               <input
                 className="p-3 rounded-xl border"

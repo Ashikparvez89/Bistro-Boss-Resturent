@@ -7,8 +7,8 @@ import useCart from "../../../Hooks/useCart";
 
 const Header = () => {
   const [cart] = useCart();
-  console.log(cart);
   const { logOut, user } = useContext(Authcontext);
+
   const handleLogout = () => {
     logOut()
       .then((result) => {
@@ -106,7 +106,7 @@ const Header = () => {
               {" "}
               {/* user profile */}
               <div className="">
-                <Link to='/dashboard/cart' className="btn btn-sm">
+                <Link to="/dashboard/cart" className="btn btn-sm">
                   <FaCartShopping></FaCartShopping>
                   <div className="badge badge-secondary">+{cart.length}</div>
                 </Link>
@@ -120,7 +120,7 @@ const Header = () => {
                   <div className="w-10 rounded-full">
                     <img
                       alt="Tailwind CSS Navbar component"
-                      src={user.photoURL}
+                      src={user?.photoURL}
                     />
                   </div>
                 </div>
@@ -130,7 +130,7 @@ const Header = () => {
                 >
                   <li>
                     <a className="justify-between text-black">
-                      {user.displayName}
+                      {user?.displayName}
                     </a>
                   </li>
                   <li>
