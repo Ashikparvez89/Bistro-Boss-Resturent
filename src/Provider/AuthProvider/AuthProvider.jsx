@@ -50,29 +50,28 @@ const AuthProvider = ({ children }) => {
     setUser(null);
     return signOut(auth);
   };
-  // useEffect(() => {
-  //   const unSubscribe = onAuthStateChanged(auth, (user) => {
-  //     setUser(user);
-  //     setLoading(false);
-  //   });
-  //   return unSubscribe;
-  // }, []);
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentuser) => {
       setUser(currentuser);
-      const userInfo = currentuser.email;
+      const userInfo = { email: currentuser?.email };
+      console.log("this is current user", currentuser);
       if (currentuser) {
         // create a token for user
-        axiosPublic.post("jwt");
+        axiosPublic.post("jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+          }
+        });
       } else {
         //Do something here
+        localStorage.removeItem("access-token");
       }
 
       setLoading(false);
     });
     return unSubscribe;
-  }, []);
+  }, [axiosPublic]);
 
   const authInfo = {
     googleLogin,

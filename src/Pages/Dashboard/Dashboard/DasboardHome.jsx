@@ -16,12 +16,12 @@ import {
 import { FiMenu } from "react-icons/fi";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import useUser from "../../../Hooks/useUser";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const DasboardHome = () => {
   const { user } = useUser();
-  console.log(user);
-
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin] = useAdmin();
+  console.log(isAdmin);
   return (
     <div className=" container mx-auto flex ">
       <div className="w-72 bg-[#d1a054] min-h-screen">
@@ -50,7 +50,7 @@ const DasboardHome = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/userhome"
+                    to="/dashboard/additems"
                     className={({ isActive }) =>
                       `text-black flex items-center gap-4 text-lg font-semibold ${
                         isActive ? "text-slate-200" : ""

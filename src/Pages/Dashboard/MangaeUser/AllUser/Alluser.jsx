@@ -1,20 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { axiosSecure } from "../../../../Hooks/useAxiosSecure";
+
 import SectionTitle from "../../../../Components/SectionTitle/SectionTitle";
 import { FaUsers } from "react-icons/fa6";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 
 const Alluser = () => {
+  const axiosSecure = useAxiosSecure();
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get("/users", {
+        headers: {
+          authorization: `Baearer ${localStorage.getItem("access-token")}`,
+        },
+      });
       return res.data;
     },
   });
-  console.log(users);
+
   const handleMakeAdmin = (user) => {
     Swal.fire({
       title: "Are you sure?",
@@ -27,7 +33,6 @@ const Alluser = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.patch(`users/admin/${user._id}`).then((res) => {
-          console.log(res.data);
           refetch();
           Swal.fire({
             title: "Great!",
@@ -50,7 +55,6 @@ const Alluser = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`users/${user._id}`).then((res) => {
-          console.log(res.data);
           refetch();
           Swal.fire({
             title: "Great!",

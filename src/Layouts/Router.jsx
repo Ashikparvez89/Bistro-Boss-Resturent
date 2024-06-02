@@ -15,6 +15,8 @@ import PaymentHistory from "../Pages/Dashboard/Payment/PaymentHistory";
 import MyBooking from "../Pages/Dashboard/Mybooking/MyBooking";
 import Private from "../Provider/Private/Private";
 import Alluser from "../Pages/Dashboard/MangaeUser/AllUser/Alluser";
+import AdminRoute from "../Provider/Private/AdminRoute";
+import Additem from "../Pages/Dashboard/AddItem/Additem";
 
 export const Router = createBrowserRouter([
   {
@@ -76,8 +78,20 @@ export const Router = createBrowserRouter([
         element: <MyBooking></MyBooking>,
       },
       {
+        path: "/dashboard/additems",
+        element: (
+          <AdminRoute>
+            <Additem></Additem>
+          </AdminRoute>
+        ),
+      },
+      {
         path: "/dashboard/allusers",
-        element: <Alluser></Alluser>,
+        element: (
+          <AdminRoute>
+            <Alluser></Alluser>
+          </AdminRoute>
+        ),
       },
     ],
   },
